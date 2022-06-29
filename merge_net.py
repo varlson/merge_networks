@@ -1,3 +1,4 @@
+import multiprocessing
 from random import randint
 import igraph as ig
 import numpy as np
@@ -9,10 +10,11 @@ def export(glist, glabel_list, output_dir):
     from utility import dirMaker
     dirMaker(output_dir)
     for index, g in enumerate(glist):
-        # node_size = (g.degree()/np.max(g.degree())*10)+8
-        # g.vs['width'] = node_size
-        # g.es['width'] = 0.9
+        node_size = (g.degree()/np.max(g.degree())*10)+8
+        g.vs['width'] = node_size
+        g.es['width'] = 0.9
         ig.plot(g, output_dir+'/'+glabel_list[index]+'.png')
+    ig.Graph.write(glist[-1], output_dir+'/'+glabel_list[-1]+'.GraphML')
 
 
 
@@ -80,20 +82,6 @@ def merge_networks(glist, attribute):
     return G
 
 
-def coord_setter(g):
-    dataFrame = pd.pandas.read_csv('in/cities_coord.csv')
-    for index,node in enumerate(g.vs['id']):
-        i = -1
-        try:
-            i = list(dataFrame['geocode']).index(node)
-            g.vs[index]['x'] = list(dataFrame['x'])[i]
-            g.vs[index]['y'] = -1 * list(dataFrame['y'])[i]
-        except:
-            print(node, end=" ")
-            print("nao tem")
-            pass
-
-
 
 
 def calculator(glist, g_result):
@@ -109,35 +97,38 @@ def calculator(glist, g_result):
 
 
 
-def main(g_list, attribute):
+def main(g_list, attribute, net_name_list):
     G = merge_networks(g_list, attribute)
     g_lst = g_list+[G]
-    export(g_lst,['g1', 'g2', 'final'], 'teste_de_merge')
+    export(g_lst,net_name_list, 'out')
     
     calculator(g_list, G)
 
 
 if __name__ == '__main__':
 
-    rede_1 = ig.Graph.Read_GraphML("in/fluvial.GraphML")
-    rede_2 = ig.Graph.Read_GraphML("in/aerialUTP.GraphML")
+    fluvial = ig.Graph.Read_GraphML("in/fluvial.GraphML")
+    aerial = ig.Graph.Read_GraphML("in/aerialUTP.GraphML")
+    terrestrial = ig.Graph.Read_GraphML("in/terrestrial.GraphML")
     
-    rede_1.vs['id'] = rede_1.vs['geocode']
-    rede_2.vs['id'] = rede_2.vs['geocode']
-
-    # rede_2 = rede_1.copy()
-
-    # rede_2.delete_edges(rede_2.get_eid(5,3))
-    # rede_2.delete_edges(rede_2.get_eid(1,2))
-
-    # rede_2.delete_vertices(6)
-    # rede_2.delete_vertices(6)
+    fluvial.vs['id'] = fluvial.vs['geocode']
+    aerial.vs['id'] = aerial.vs['geocode']
+    terrestrial.vs['id'] = terrestrial.vs['geocode']
 
 
-    # rede_1.delete_edges(rede_1.get_eid(5,4))
-    # rede_1.delete_edges(rede_1.get_eid(1,0))
+    flu_aer = multiprocessing.Process(target=main, args=[[fluvial, aerial], 'weight', ['fluvial', 'aerial','fluvial_&_aerial']])
+    flu_ter = multiprocessing.Process(target=main, args=[[fluvial, terrestrial], 'weight', ['fluvial', 'terrestrial','fluvial_&_terrestrial']])
+    terr_aer = multiprocessing.Process(target=main, args=[[terrestrial, aerial], 'weight', ['terrestrial', 'aerial','terrestrial_&_aerial']])
+    
+    flu_aer.start()
+    flu_ter.start()
+    terr_aer.start()
+    
+    flu_aer.join()
+    flu_ter.join()
+    terr_aer.join()
 
-    main([rede_2, rede_1], 'weight')
+
 
 
 

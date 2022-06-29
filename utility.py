@@ -41,6 +41,7 @@ def correspondence_processor(graph_geocode, covid_cases_geocode):
 
 def graphPloter(list_of_coord, labels, name="teste"): 
     plt.clf()
+    # print(f'dados {list_of_coord}')
     for index, coord in enumerate(list_of_coord):
         x = coord[0]
         y = coord[1]
