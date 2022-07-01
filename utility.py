@@ -102,10 +102,10 @@ def export_csv(g, dataframe, name):
     df = pd.DataFrame(df)
     df.to_csv('out/csv/'+name+'.csv')
 
-if __name__ == 'main':
-    fl_ae = Graph.Read_GraphML('in/aerial_&_fluvial.GraphML')
-    fl_te = Graph.Read_GraphML('in/fluvial_&_terrestrial.GraphML')
-    te_ae = Graph.Read_GraphML('in/aerial_&_terrestrial.GraphML')
+if __name__ == '__main__':
+    fl_ae = Graph.Read_GraphML('out/fluvial_&_aerial.GraphML')
+    fl_te = Graph.Read_GraphML('out/fluvial_&_terrestrial.GraphML')
+    te_ae = Graph.Read_GraphML('out/terrestrial_&_aerial.GraphML')
 
     df = pd.read_csv('in/cases-brazil-cities-time.csv')
 

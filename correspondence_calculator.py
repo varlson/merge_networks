@@ -7,9 +7,11 @@ dataframe = {}
 _tuple = return_values.list()
 
 
+# lgraph = ['fluvial_&_aerial.GraphML', 'fluvial_&_terrestrial.GraphML', 'terrestrial_&_aerial.GraphML']
 
-name = 'fluvial_&_terrestrial'
-graph = Graph.Read_GraphML('in/'+name+'.GraphML')
+name = 'terrestrial_&_aerial'
+# name = sys.argv[2]
+graph = Graph.Read_GraphML('out/'+name+'.GraphML')
 graph.vs['geocode'] = graph.vs['id']  
 graph.es['weight'] = [x if x > 0 else 0.00001 for x in graph.es['weight']] 
 
@@ -104,4 +106,8 @@ def main(graph, graph_name):
 
 
 
+# lgraph = ['fluvial_&_aerial.GraphML', 'fluvial_&_terrestrial.GraphML', 'terrestrial_&_aerial.GraphML']
+
+
+    
 main(graph, name)
