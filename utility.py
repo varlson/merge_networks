@@ -39,7 +39,7 @@ def correspondence_processor(graph_geocode, covid_cases_geocode):
     return correspondence
 
 
-def graphPloter(list_of_coord, labels, name="teste"): 
+def graphPloter(list_of_coord, labels, full_path, name="teste"): 
     plt.clf()
     # print(f'dados {list_of_coord}')
     for index, coord in enumerate(list_of_coord):
@@ -52,8 +52,8 @@ def graphPloter(list_of_coord, labels, name="teste"):
     
     plt.legend()
     plt.title(name)
-    dirMaker('out/images')
-    plt.savefig('out/images/'+name+'.png')
+    dirMaker(full_path)
+    plt.savefig(f'{full_path}/{name}.png')
 
 
 def dirMaker(dir):
@@ -81,7 +81,7 @@ def dirMaker(dir):
 
 
 
-def export_csv(g, dataframe, name):
+def export_csv(g, dataframe, name, dir):
     df = {}
     lst_geo = []
     lst_cit = []
@@ -100,15 +100,39 @@ def export_csv(g, dataframe, name):
     df['cities'] = lst_cit
     df['geocode'] = lst_geo
     df = pd.DataFrame(df)
-    df.to_csv('out/csv/'+name+'.csv')
+    df.to_csv(f'{dir}/{name}.csv')
+
+
+def export(glist, glabel_list, output_dir):
+    dirMaker(output_dir)
+    for index, g in enumerate(glist):
+        try:
+            node_size = (g.degree()/np.max(g.degree())*10)+8
+        except:
+            pass
+        g.vs['width'] = node_size
+        g.es['width'] = 1
+        plot(g, output_dir+'/'+glabel_list[index]+'.png')
+    Graph.write(glist[-1], output_dir+'/'+glabel_list[-1]+'.GraphML')
+
 
 if __name__ == '__main__':
-    fl_ae = Graph.Read_GraphML('out/fluvial_&_aerial.GraphML')
-    fl_te = Graph.Read_GraphML('out/fluvial_&_terrestrial.GraphML')
-    te_ae = Graph.Read_GraphML('out/terrestrial_&_aerial.GraphML')
+
+    te_ae = Graph.Read_GraphML('out/amazonas/networks/terrestrial_&_aerial.GraphML')
+    fl_ae = Graph.Read_GraphML('out/amazonas/networks/fluvial_&_aerial.GraphML')
+    fl_te = Graph.Read_GraphML('out/amazonas/networks/fluvial_&_terrestrial.GraphML')
+    
+    fl_ae.vs['geocode'] = fl_ae.vs['id']
+    fl_te.vs['geocode'] = fl_te.vs['id']
+    te_ae.vs['geocode'] = te_ae.vs['id']
+
+
+    # summary(fl_ae)
+    # # summary(fl_te)
+    # summary(te_ae)
 
     df = pd.read_csv('in/cases-brazil-cities-time.csv')
 
-    export_csv(fl_ae, df, 'aerial_&_fluvial')
-    export_csv(fl_te, df, 'fluvial_&_terrestrial')
-    export_csv(te_ae, df, 'aerial_&_terrestrial')
+    export_csv(fl_ae, df, 'fluvial_&_aerial', 'out/amazonas/csv')
+    export_csv(fl_te, df, 'fluvial_&_terrestrial', 'out/amazonas/csv')
+    export_csv(te_ae, df, 'terrestrial_&_aerial', 'out/amazonas/csv')

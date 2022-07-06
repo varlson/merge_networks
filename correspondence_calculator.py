@@ -9,20 +9,24 @@ _tuple = return_values.list()
 
 # lgraph = ['fluvial_&_aerial.GraphML', 'fluvial_&_terrestrial.GraphML', 'terrestrial_&_aerial.GraphML']
 
-name = 'terrestrial_&_aerial'
+name = 'fluvial_&_terrestrial'
+in_net_base_path = 'out/amazonas/networks'
+in_csv_base_path = 'out/amazonas/csv'
+out_full_path = 'out/amazonas/plots/correspondence'
 # name = sys.argv[2]
-graph = Graph.Read_GraphML('out/'+name+'.GraphML')
+graph = Graph.Read_GraphML(f'{in_net_base_path}/{name}.GraphML')
 graph.vs['geocode'] = graph.vs['id']  
 graph.es['weight'] = [x if x > 0 else 0.00001 for x in graph.es['weight']] 
 
 x_axis = [x for x in range(graph.vcount())]
-covid_cases_geocodes = list(pd.read_csv('out/csv/'+name+'.csv')['geocode'])
+covid_cases_geocodes = list(pd.read_csv(f'{in_csv_base_path}/fluvial_&_terrestrial.csv')['geocode'])
 dataframe['covid_cases_geocode'] = covid_cases_geocodes
 
 
 def degree():
     print('job-1')
     deg_metric = sort_by_metric(graph, 'degree')
+    print(f'sorted: {deg_metric}')
     graph_geocodes = [x[0] for x in deg_metric]
     sorted_by_degree = [x[1] for x in deg_metric]
     correspondence = correspondence_processor(graph_geocodes, covid_cases_geocodes)
@@ -31,7 +35,6 @@ def degree():
     cor,pvalue = spearman(graph_geocodes, covid_cases_geocodes)
 
     _tuple.append((x_axis, correspondence,( cor,pvalue)))
-    # print(f'locally {for_degree}')
 
 def strength():
     print('job-3')
@@ -75,7 +78,7 @@ def betweenness_w():
     _tuple.append((x_axis, correspondence,( cor,pvalue)))
     # print(f'locally {for_betweenness_w}')
 
-def main(graph, graph_name):
+def main(graph, graph_name, full_path):
 
     
     all_process =[]
@@ -97,7 +100,7 @@ def main(graph, graph_name):
 
     print(f'total time {end-start}')
     print(f'size of {len(_tuple)}')
-    graphPloter(_tuple, ["$k$", "$b$", "$s$", "$b_{w}$"], graph_name)
+    graphPloter(_tuple, ["$k$", "$b$", "$s$", "$b_{w}$"], full_path, graph_name)
 
     df = pd.DataFrame(dataframe)
     dirMaker('out/csv/processed')
@@ -110,4 +113,4 @@ def main(graph, graph_name):
 
 
     
-main(graph, name)
+main(graph, name, out_full_path)

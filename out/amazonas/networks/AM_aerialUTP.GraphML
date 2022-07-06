@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<graphml xmlns="http://graphml.graphdrawing.org/xmlns"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://graphml.graphdrawing.org/xmlns
+         http://graphml.graphdrawing.org/xmlns/1.0/graphml.xsd">
+<!-- Created by igraph -->
+  <key id="v_name" for="node" attr.name="name" attr.type="string"/>
+  <key id="v_utp" for="node" attr.name="utp" attr.type="double"/>
+  <key id="v_label" for="node" attr.name="label" attr.type="string"/>
+  <key id="v_geocode" for="node" attr.name="geocode" attr.type="double"/>
+  <key id="v_X" for="node" attr.name="X" attr.type="double"/>
+  <key id="v_Y" for="node" attr.name="Y" attr.type="double"/>
+  <key id="v_size" for="node" attr.name="size" attr.type="double"/>
+  <key id="v_label_size" for="node" attr.name="label_size" attr.type="double"/>
+  <key id="v_id" for="node" attr.name="id" attr.type="string"/>
+  <key id="v_x" for="node" attr.name="x" attr.type="double"/>
+  <key id="v_y" for="node" attr.name="y" attr.type="double"/>
+  <key id="v_state" for="node" attr.name="state" attr.type="string"/>
+  <key id="v_width" for="node" attr.name="width" attr.type="double"/>
+  <key id="e_weight" for="edge" attr.name="weight" attr.type="boolean"/>
+  <key id="e_width" for="edge" attr.name="width" attr.type="boolean"/>
+  <graph id="G" edgedefault="undirected">
+    <node id="n0">
+      <data key="v_name">SBEG</data>
+      <data key="v_utp">206</data>
+      <data key="v_label">MANAUS</data>
+      <data key="v_geocode">1302603</data>
+      <data key="v_X">-60.25963</data>
+      <data key="v_Y">-2.62592</data>
+      <data key="v_size">5.4</data>
+      <data key="v_label_size">2</data>
+      <data key="v_id">n25</data>
+      <data key="v_x">-60.25963</data>
+      <data key="v_y">2.62592</data>
+      <data key="v_state">AM</data>
+      <data key="v_width">10</data>
+    </node>
+    <node id="n1">
+      <data key="v_name">SBTF</data>
+      <data key="v_utp">734</data>
+      <data key="v_label">TEFÉ</data>
+      <data key="v_geocode">1304203</data>
+      <data key="v_X">-65.53154</data>
+      <data key="v_Y">-4.47011</data>
+      <data key="v_size">2</data>
+      <data key="v_label_size">2</data>
+      <data key="v_id">n75</data>
+      <data key="v_x">-65.53154</data>
+      <data key="v_y">4.47011</data>
+      <data key="v_state">AM</data>
+      <data key="v_width">10</data>
+    </node>
+    <node id="n2">
+      <data key="v_name">SWLB</data>
+      <data key="v_utp">567</data>
+      <data key="v_label">LÁBREA</data>
+      <data key="v_geocode">1302405</data>
+      <data key="v_X">-65.81166</data>
+      <data key="v_Y">-8.3756</data>
+      <data key="v_size">2</data>
+      <data key="v_label_size">2</data>
+      <data key="v_id">n92</data>
+      <data key="v_x">-65.81166</data>
+      <data key="v_y">8.3756</data>
+      <data key="v_state">AM</data>
+      <data key="v_width">10</data>
+    </node>
+    <node id="n3">
+      <data key="v_name">SWPI</data>
+      <data key="v_utp">238</data>
+      <data key="v_label">PARINTINS</data>
+      <data key="v_geocode">1303403</data>
+      <data key="v_X">-56.85409</data>
+      <data key="v_Y">-2.6884</data>
+      <data key="v_size">2.4</data>
+      <data key="v_label_size">2</data>
+      <data key="v_id">n94</data>
+      <data key="v_x">-56.85409</data>
+      <data key="v_y">2.6884</data>
+      <data key="v_state">AM</data>
+      <data key="v_width">10</data>
+    </node>
+  </graph>
+</graphml>

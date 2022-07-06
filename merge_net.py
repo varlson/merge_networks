@@ -3,19 +3,7 @@ from random import randint
 import igraph as ig
 import numpy as np
 import pandas as pd
-
-
-
-def export(glist, glabel_list, output_dir):
-    from utility import dirMaker
-    dirMaker(output_dir)
-    for index, g in enumerate(glist):
-        node_size = (g.degree()/np.max(g.degree())*10)+8
-        g.vs['width'] = node_size
-        g.es['width'] = 0.9
-        ig.plot(g, output_dir+'/'+glabel_list[index]+'.png')
-    ig.Graph.write(glist[-1], output_dir+'/'+glabel_list[-1]+'.GraphML')
-
+from utility import export
 
 
 def id_extractor(graph, src,trg, attribute):
@@ -60,7 +48,6 @@ def merge_networks(glist, attribute):
     
 
     for graph in glist:
-        ig.summary(graph)
         for index, id in enumerate(graph.vs['id']):
             if id not in all_unique_verttex_id:
                 all_unique_verttex_id.append(id)
@@ -89,43 +76,51 @@ def calculator(glist, g_result):
     identifier(glist, 'id')
     identifier([g_result], 'id')
     for g in glist:
-        all_edges += [x for x in g.es['id'] if x not in all_edges]
-
+        try:
+            all_edges += [x for x in g.es['id'] if x not in all_edges]
+        except:
+            pass
     print(f'size of all_net {len(all_edges)}')
     print(f'size of merged {g_result.ecount()}')
 
 
 
 
-def main(g_list, attribute, net_name_list):
+def main(g_list, attribute, net_name_list, output_path='out/brazil_merged'):
     G = merge_networks(g_list, attribute)
     g_lst = g_list+[G]
-    export(g_lst,net_name_list, 'out')
-    
+    export(g_lst,net_name_list, output_path)
+    print(g_list)
+    identifier(g_list)
     calculator(g_list, G)
 
 
 if __name__ == '__main__':
 
-    fluvial = ig.Graph.Read_GraphML("in/fluvial.GraphML")
-    aerial = ig.Graph.Read_GraphML("in/aerialUTP.GraphML")
-    terrestrial = ig.Graph.Read_GraphML("in/terrestrial.GraphML")
+    # fluvial = ig.Graph.Read_GraphML("in/fluvial.GraphML")
+    # aerial = ig.Graph.Read_GraphML("in/aerialUTP.GraphML")
+    # terrestrial = ig.Graph.Read_GraphML("in/terrestrial.GraphML")
     
-    fluvial.vs['id'] = fluvial.vs['geocode']
+    full_path = 'out/sao_paulo/networks'
+    aerial= ig.Graph.Read_GraphML(f"{full_path}/SP_aerialUTP.GraphML")
+    # fluvial = ig.Graph.Read_GraphML(f"{full_path}/SP_fluvial.GraphML")
+    terrestrial = ig.Graph.Read_GraphML(f"{full_path}/SP_terrestrial.GraphML")
+
+    # fluvial.vs['id'] = fluvial.vs['geocode']
     aerial.vs['id'] = aerial.vs['geocode']
     terrestrial.vs['id'] = terrestrial.vs['geocode']
 
 
-    flu_aer = multiprocessing.Process(target=main, args=[[fluvial, aerial], 'weight', ['fluvial', 'aerial','fluvial_&_aerial']])
-    flu_ter = multiprocessing.Process(target=main, args=[[fluvial, terrestrial], 'weight', ['fluvial', 'terrestrial','fluvial_&_terrestrial']])
-    terr_aer = multiprocessing.Process(target=main, args=[[terrestrial, aerial], 'weight', ['terrestrial', 'aerial','terrestrial_&_aerial']])
+    # flu_aer = multiprocessing.Process(target=main, args=[[fluvial, aerial], 'weight', ['fluvial', 'aerial','fluvial_&_aerial'], full_path])
+    # flu_ter = multiprocessing.Process(target=main, args=[[fluvial, terrestrial], 'weight', ['fluvial', 'terrestrial','fluvial_&_terrestrial'], full_path])
+    terr_aer = multiprocessing.Process(target=main, args=[[terrestrial, aerial], 'weight', ['terrestrial', 'aerial','terrestrial_&_aerial'], full_path])
     
-    flu_aer.start()
-    flu_ter.start()
+    # flu_aer.start()
+    # flu_ter.start()
     terr_aer.start()
     
-    flu_aer.join()
-    flu_ter.join()
+    # flu_aer.join()
+    # flu_ter.join()
     terr_aer.join()
 
 
