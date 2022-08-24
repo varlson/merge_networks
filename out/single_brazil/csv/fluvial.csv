@@ -1,0 +1,141 @@
+,cities,geocode
+0,Manaus/AM,1302603
+1,Salvador/BA,2927408
+2,Belém/PA,1501402
+3,Propriá/SE,2805703
+4,Macapá/AP,1600303
+5,São Luís/MA,2111300
+6,Porto Velho/RO,1100205
+7,Parintins/AM,1303403
+8,Marabá/PA,1504208
+9,Rio Grande/RS,4315602
+10,Laguna/SC,4209409
+11,Porto Real do Colégio/AL,2707503
+12,Itaituba/PA,1503606
+13,Santo Antônio do Içá/AM,1303700
+14,Manacapuru/AM,1302504
+15,Mangaratiba/RJ,3302601
+16,Anori/AM,1300102
+17,Itacoatiara/AM,1301902
+18,Angra dos Reis/RJ,3300100
+19,Novo Airão/AM,1303205
+20,Abaetetuba/PA,1500107
+21,Careiro da Várzea/AM,1301159
+22,Tucuruí/PA,1508100
+23,Barcarena/PA,1501303
+24,Imperatriz/MA,2105302
+25,Santarém/PA,1506807
+26,Paranaguá/PR,4118204
+27,Tonantins/AM,1304237
+28,Altamira/PA,1500602
+29,Oeiras do Pará/PA,1505205
+30,São José de Ribamar/MA,2111201
+31,Itapiranga/SC,4208401
+32,Areia Branca/RN,2401107
+33,Iranduba/AM,1301852
+34,Santana/AP,1600600
+35,Cametá/PA,1502103
+36,Jutaí/AM,1302306
+37,São Gabriel da Cachoeira/AM,1303809
+38,São Paulo de Olivença/AM,1303908
+39,Icatu/MA,2105104
+40,Manicoré/AM,1302702
+41,Tabatinga/AM,1304062
+42,Maués/AM,1302900
+43,Tefé/AM,1304203
+44,Acará/PA,1500206
+45,Vera Cruz/BA,2933208
+46,Cruzeiro do Sul/AC,1200203
+47,Anamã/AM,1300086
+48,Lábrea/AM,1302405
+49,Tucumã/PA,1508084
+50,Vitória do Jari/AP,1600808
+51,Óbidos/PA,1505106
+52,Cachoeira do Arari/PA,1502004
+53,Curralinho/PA,1502806
+54,Juruti/PA,1503903
+55,Laranjal do Jari/AP,1600279
+56,Monte Alegre/PA,1504802
+57,Muaná/PA,1504901
+58,Carauari/AM,1301001
+59,Afuá/PA,1500305
+60,Coari/AM,1301209
+61,Alcântara/MA,2100204
+62,Santa Isabel do Rio Negro/AM,1303601
+63,Canutama/AM,1300904
+64,Juruá/AM,1302207
+65,Salvaterra/PA,1506302
+66,Santa Cruz do Arari/PA,1506401
+67,Autazes/AM,1300300
+68,Breves/PA,1501808
+69,Oriximiná/PA,1505304
+70,Beruri/AM,1300631
+71,São Sebastião da Boa Vista/PA,1507706
+72,Barcelos/AM,1300409
+73,Benjamin Constant/AM,1300607
+74,Maraã/AM,1302801
+75,Nova Olinda do Norte/AM,1303106
+76,Alenquer/PA,1500404
+77,Anajás/PA,1500701
+78,Manaquiri/AM,1302553
+79,Nhamundá/AM,1303007
+80,Amaturá/AM,1300060
+81,Caapiranga/AM,1300839
+82,Codajás/AM,1301308
+83,Fonte Boa/AM,1301605
+84,Limoeiro do Ajuru/PA,1504000
+85,Novo Aripuanã/AM,1303304
+86,Piaçabuçu/AL,2706802
+87,Ponta de Pedras/PA,1505700
+88,Porto de Moz/PA,1505908
+89,Tapauá/AM,1304104
+90,Viseu/PA,1508308
+91,Almeirim/PA,1500503
+92,São Sebastião do Uatumã/AM,1303957
+93,Urucará/AM,1304302
+94,Bagre/PA,1501105
+95,Humaitá/AM,1301704
+96,Itaparica/BA,2916104
+97,Itapiranga/AM,1302009
+98,Mocajuba/PA,1504604
+99,Urucurituba/AM,1304401
+100,Borba/AM,1300805
+101,Melgaço/PA,1504505
+102,Penedo/AL,2706703
+103,Baião/PA,1501204
+104,Humberto de Campos/MA,2105005
+105,Prainha/PA,1506005
+106,Barreirinha/AM,1300508
+107,Terra Santa/PA,1507979
+108,Boa Vista do Ramos/AM,1300680
+109,Chaves/PA,1502509
+110,Pilão Arcado/BA,2924405
+111,Senador José Porfírio/PA,1507805
+112,Alvarães/AM,1300029
+113,Carutapera/MA,2102903
+114,Grossos/RN,2404408
+115,Remanso/BA,2926004
+116,Portel/PA,1505809
+117,Curuá/PA,1502855
+118,Faro/PA,1503002
+119,Guaraqueçaba/PR,4109500
+120,Soure/PA,1507904
+121,Vitória do Xingu/PA,1508357
+122,Gararu/SE,2802403
+123,Gurupá/PA,1503101
+124,Santana do São Francisco/SE,2806404
+125,Japurá/AM,1302108
+126,Marechal Thaumaturgo/AC,1200351
+127,Itaguatins/TO,1710706
+128,Porto Walter/AC,1200393
+129,Primeira Cruz/MA,2109403
+130,Sento Sé/BA,2930204
+131,Uarini/AM,1304260
+132,Brejo Grande/SE,2800704
+133,Xique-Xique/BA,2933604
+134,Traipu/AL,2709202
+135,Aveiro/PA,1501006
+136,Ipixuna/AM,1301803
+137,São José do Norte/RS,4318507
+138,Pinheirinho do Vale/RS,4314498
+139,Imaruí/SC,4207205

@@ -1,25 +1,36 @@
 from datetime import datetime
 from utility import *
 import multiprocessing
-
+from sklearn.metrics import auc
 return_values = multiprocessing.Manager()
 dataframe = {}
 _tuple = return_values.list()
 
 
-# lgraph = ['fluvial_&_aerial.GraphML', 'fluvial_&_terrestrial.GraphML', 'terrestrial_&_aerial.GraphML']
+all_procs = [
+        {'single_brazil': ['aerial', 'fluvial', 'terrestrial']},
+        {'brazil_merged': ['fluvial_&_aerial', 'fluvial_&_terrestrial', 'terrestrial_&_aerial']},
+        {'amazonas': ['fluvial_&_aerial', 'fluvial_&_terrestrial', 'terrestrial_&_aerial']},
+        {'sao_paulo':['SP_aerial', 'SP_terrestrial', 'terrestrial_&_aerial']}
+        ]
 
-name = 'fluvial_&_terrestrial'
-in_net_base_path = 'out/amazonas/networks'
-in_csv_base_path = 'out/amazonas/csv'
-out_full_path = 'out/amazonas/plots/correspondence'
+case = all_procs[0]
+case_name = list(case.keys())[0]
+
+name = case[case_name][0]
+
+# print(f'casename {case_name} name {name}')
+in_net_base_path = f'out/{case_name}/networks'
+in_csv_base_path = f'out/{case_name}/csv'
+out_full_path = f'out/{case_name}/plots/correspondence'
 # name = sys.argv[2]
 graph = Graph.Read_GraphML(f'{in_net_base_path}/{name}.GraphML')
-graph.vs['geocode'] = graph.vs['id']  
+# graph.vs['geocode'] = graph.vs['id']  
+# print(f'teste {graph.vs["geocode"]}')
 graph.es['weight'] = [x if x > 0 else 0.00001 for x in graph.es['weight']] 
 
 x_axis = [x for x in range(graph.vcount())]
-covid_cases_geocodes = list(pd.read_csv(f'{in_csv_base_path}/fluvial_&_terrestrial.csv')['geocode'])
+covid_cases_geocodes = list(pd.read_csv(f'{in_csv_base_path}/{name}.csv')['geocode'])
 dataframe['covid_cases_geocode'] = covid_cases_geocodes
 
 
@@ -27,56 +38,54 @@ def degree():
     print('job-1')
     deg_metric = sort_by_metric(graph, 'degree')
     print(f'sorted: {deg_metric}')
-    graph_geocodes = [x[0] for x in deg_metric]
-    sorted_by_degree = [x[1] for x in deg_metric]
-    correspondence = correspondence_processor(graph_geocodes, covid_cases_geocodes)
-    dataframe['geocode_by_degree'] = graph_geocodes
-    dataframe['correspondence_by_degree'] = correspondence
-    cor,pvalue = spearman(graph_geocodes, covid_cases_geocodes)
-
-    _tuple.append((x_axis, correspondence,( cor,pvalue)))
+    # graph_geocodes = [x[0] for x in deg_metric]
+    # sorted_by_degree = [x[1] for x in deg_metric]
+    # correspondence = correspondence_processor(graph_geocodes, covid_cases_geocodes)
+    # dataframe['geocode_by_degree'] = graph_geocodes
+    # dataframe['correspondence_by_degree'] = correspondence
+    # cor,pvalue = spearman(graph_geocodes, covid_cases_geocodes)
+    # curve = np.mean(correspondence)
+    # _tuple.append((x_axis, correspondence,( cor,pvalue), curve))
 
 def strength():
     print('job-3')
     srte_metric = sort_by_metric(graph, 'strength')
-    graph_geocodes = [x[0] for x in srte_metric]
-    geocode_by_bet = [x[1] for x in srte_metric]
-    correspondence = correspondence_processor(graph_geocodes, covid_cases_geocodes)
-    dataframe['geocode_by_strength'] = graph_geocodes
-    dataframe['correspondence_by_strength'] = correspondence
-    cor,pvalue = spearman(graph_geocodes, covid_cases_geocodes)
+    # graph_geocodes = [x[0] for x in srte_metric]
+    # geocode_by_bet = [x[1] for x in srte_metric]
+    # correspondence = correspondence_processor(graph_geocodes, covid_cases_geocodes)
+    # dataframe['geocode_by_strength'] = graph_geocodes
+    # dataframe['correspondence_by_strength'] = correspondence
+    # cor,pvalue = spearman(graph_geocodes, covid_cases_geocodes)
 
-    _tuple.append((x_axis, correspondence,( cor,pvalue)))
-    # print(f'locally {for_strength}')
+    # curve = np.mean(correspondence)
+    # _tuple.append((x_axis, correspondence,( cor,pvalue), curve))
 
 def betweenness():
     
     print('job-2')
     bet_metric = sort_by_metric(graph, 'betweenness')
-    graph_geocodes = [x[0] for x in bet_metric]
-    geocode_by_bet = [x[1] for x in bet_metric]
-    correspondence = correspondence_processor(graph_geocodes, covid_cases_geocodes)
-    dataframe['geocode_by_betweenness'] = graph_geocodes
-    dataframe['correspondence_by_betweenness'] = correspondence
-    cor,pvalue = spearman(graph_geocodes, covid_cases_geocodes)
+    # graph_geocodes = [x[0] for x in bet_metric]
+    # geocode_by_bet = [x[1] for x in bet_metric]
+    # correspondence = correspondence_processor(graph_geocodes, covid_cases_geocodes)
+    # dataframe['geocode_by_betweenness'] = graph_geocodes
+    # dataframe['correspondence_by_betweenness'] = correspondence
+    # cor,pvalue = spearman(graph_geocodes, covid_cases_geocodes)
 
-    _tuple.append((x_axis, correspondence,( cor,pvalue)))
-    # print(f'locally {for_betweenness}')
-
-
+    # curve = np.mean(correspondence)
+    # _tuple.append((x_axis, correspondence,( cor,pvalue), curve))
 def betweenness_w():
     
     print('job-4')
     bet_w_metric = sort_by_metric(graph, 'betweenness_w')
-    graph_geocodes = [x[0] for x in bet_w_metric]
-    geocode_by_bet = [x[1] for x in bet_w_metric]
-    correspondence = correspondence_processor(graph_geocodes, covid_cases_geocodes)
-    dataframe['geocode_by_betweenness_w'] = graph_geocodes
-    dataframe['correspondence_by_betweenness_w'] = correspondence
-    cor,pvalue = spearman(graph_geocodes, covid_cases_geocodes)
+    # graph_geocodes = [x[0] for x in bet_w_metric]
+    # geocode_by_bet = [x[1] for x in bet_w_metric]
+    # correspondence = correspondence_processor(graph_geocodes, covid_cases_geocodes)
+    # dataframe['geocode_by_betweenness_w'] = graph_geocodes
+    # dataframe['correspondence_by_betweenness_w'] = correspondence
+    # cor,pvalue = spearman(graph_geocodes, covid_cases_geocodes)
 
-    _tuple.append((x_axis, correspondence,( cor,pvalue)))
-    # print(f'locally {for_betweenness_w}')
+    # curve = np.mean(correspondence)
+    # _tuple.append((x_axis, correspondence,( cor,pvalue), curve))
 
 def main(graph, graph_name, full_path):
 
@@ -98,13 +107,13 @@ def main(graph, graph_name, full_path):
     end = datetime.now()
 
 
-    print(f'total time {end-start}')
-    print(f'size of {len(_tuple)}')
-    graphPloter(_tuple, ["$k$", "$b$", "$s$", "$b_{w}$"], full_path, graph_name)
+    # print(f'total time {end-start}')
+    # print(f'size of {len(_tuple)}')
+    # graphPloter(_tuple, ["$k$", "$b$", "$s$", "$b_{w}$"], full_path, graph_name)
 
-    df = pd.DataFrame(dataframe)
-    dirMaker('out/csv/processed')
-    df.to_csv('out/csv/processed/'+graph_name+'.csv')
+    # df = pd.DataFrame(dataframe)
+    # dirMaker('out/csv/processed')
+    # df.to_csv('out/csv/processed/'+graph_name+'.csv')
 
 
 

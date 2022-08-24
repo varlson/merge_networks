@@ -9,17 +9,26 @@ from os import mkdir,path
 
 def sort_by_metric(graph, metric):
     
+    # switcher = {
+
+    #     "degree": [(graph.vs[index]['geocode'], x) for index, x in enumerate(graph.degree())],
+    #     "betweenness":[(graph.vs[index]['geocode'], x) for index, x in enumerate(graph.betweenness())],
+    #     "strength": [(graph.vs[index]['geocode'], x) for index, x in enumerate(graph.strength(weights = graph.es['weight']))],
+    #     "betweenness_w": [(graph.vs[index]['geocode'], x) for index, x in enumerate(graph.betweenness(weights = graph.es['weight']))] 
+    # }
+
     switcher = {
 
-        "degree": [(graph.vs[index]['geocode'], x) for index, x in enumerate(graph.degree())],
-        "betweenness":[(graph.vs[index]['geocode'], x) for index, x in enumerate(graph.betweenness())],
-        "strength": [(graph.vs[index]['geocode'], x) for index, x in enumerate(graph.strength(weights = graph.es['weight']))],
-        "betweenness_w": [(graph.vs[index]['geocode'], x) for index, x in enumerate(graph.betweenness(weights = graph.es['weight']))] 
+        "degree": [[index, graph.vs[index]['geocode'], x] for index, x in enumerate(graph.degree())],
+        "betweenness":[[index, graph.vs[index]['geocode'], x] for index, x in enumerate(graph.betweenness())],
+        "strength": [[index, graph.vs[index]['geocode'], x] for index, x in enumerate(graph.strength(weights = graph.es['weight']))],
+        "betweenness_w": [[index, graph.vs[index]['geocode'], x] for index, x in enumerate(graph.betweenness(weights = graph.es['weight']))] 
     }
     
 
     done = switcher.get(metric)
-    done = sorted(done, key=lambda data: data[1], reverse=True )
+    done = sorted(done, key=lambda data: data[2], reverse=True )
+    # done = sorted(done, key=lambda data: data[1], reverse=True )
     return done
 
 
@@ -46,9 +55,10 @@ def graphPloter(list_of_coord, labels, full_path, name="teste"):
         x = coord[0]
         y = coord[1]
         sper = coord[2]
-        corr = "{:.8f}".format(sper[0])
-        pval = "{:.8f}".format(sper[1])
-        plt.plot(x, y, label=labels[index]+' sp: '+corr+' pv: '+pval, marker="1")
+        corr = "{:.3f}".format(sper[0])
+        pval = "{:.3f}".format(sper[1])
+        curve = coord[3]
+        plt.plot(x, y, label=labels[index]+' sp: '+corr+' pv: '+pval+' curve: '+str(curve)[:4], marker="1")
     
     plt.legend()
     plt.title(name)
@@ -85,20 +95,25 @@ def export_csv(g, dataframe, name, dir):
     df = {}
     lst_geo = []
     lst_cit = []
+    lst_date = []
     lst_geocode = list(dataframe['ibgeID'])
+    lst_geocode = [int(geocode) for geocode in lst_geocode]
     lst_cities = list(dataframe['city'])
+    lst_dates = list(dataframe['date'])
 
     for index, geo in enumerate(lst_geocode):
         if geo in g.vs['id']:
             if geo not in lst_geo:
                 lst_geo.append(geo)
-                print(len(lst_cit))
                 lst_cit.append(lst_cities[index])
+                updated = str(lst_dates[index]).replace('-', '/')
+                lst_date.append(updated)
     
     print(f'{len(lst_geo)} {len(lst_cities)}')
 
-    df['cities'] = lst_cit
+    df['date'] = lst_date
     df['geocode'] = lst_geo
+    df['cities'] = lst_cit
     df = pd.DataFrame(df)
     df.to_csv(f'{dir}/{name}.csv')
 
@@ -118,21 +133,23 @@ def export(glist, glabel_list, output_dir):
 
 if __name__ == '__main__':
 
-    te_ae = Graph.Read_GraphML('out/amazonas/networks/terrestrial_&_aerial.GraphML')
-    fl_ae = Graph.Read_GraphML('out/amazonas/networks/fluvial_&_aerial.GraphML')
-    fl_te = Graph.Read_GraphML('out/amazonas/networks/fluvial_&_terrestrial.GraphML')
+    te = Graph.Read_GraphML('out/single_brazil/networks/terrestrial.GraphML')
+    ae = Graph.Read_GraphML('out/single_brazil/networks/aerialUTP.GraphML')
+    fl = Graph.Read_GraphML('out/single_brazil/networks/fluvial.GraphML')
     
-    fl_ae.vs['geocode'] = fl_ae.vs['id']
-    fl_te.vs['geocode'] = fl_te.vs['id']
-    te_ae.vs['geocode'] = te_ae.vs['id']
+    ae.vs['id'] = ae.vs['geocode']
+    fl.vs['id'] = fl.vs['geocode']
+    te.vs['id'] = te.vs['geocode']
 
+    # print(f'{summary(te)}')
+    # print(f'{summary(ae)}')
+    # print(f'{summary(fl)}')
 
-    # summary(fl_ae)
-    # # summary(fl_te)
-    # summary(te_ae)
+    # summary(ae)
+    # # summary(fl)
+    # summary(te)
 
     df = pd.read_csv('in/cases-brazil-cities-time.csv')
-
-    export_csv(fl_ae, df, 'fluvial_&_aerial', 'out/amazonas/csv')
-    export_csv(fl_te, df, 'fluvial_&_terrestrial', 'out/amazonas/csv')
-    export_csv(te_ae, df, 'terrestrial_&_aerial', 'out/amazonas/csv')
+    export_csv(ae, df, 'aerial', 'out/single_brazil/csv')
+    export_csv(fl, df, 'fluvial', 'out/single_brazil/csv')
+    export_csv(te, df, 'terrestrial', 'out/single_brazil/csv')
