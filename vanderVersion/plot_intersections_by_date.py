@@ -13,14 +13,14 @@ from mpl_toolkits.axes_grid.inset_locator import (inset_axes, InsetPosition,
 
 
 # Latex font --------------------
-rc('text', usetex=True)
-font = {'family' : 'normal',
-         'weight' : 'bold',
-         'size'   : 12}
+# rc('text', usetex=True)
+# font = {'family' : 'normal',
+#          'weight' : 'bold',
+#          'size'   : 12}
 
-rc('font', **font)
-params = {'legend.fontsize': 14}
-plt.rcParams.update(params)
+# rc('font', **font)
+# params = {'legend.fontsize': 14}
+# plt.rcParams.update(params)
 # -------------------------------
 
 
