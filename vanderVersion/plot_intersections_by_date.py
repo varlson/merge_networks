@@ -94,30 +94,30 @@ for i in range(len(metrics)):
 
 #print(array_metrics.iloc[:,0])
 
-null_model = pd.read_csv('null_model.csv', delimiter=';', header=None)
-X = np.linspace(0,len(array_metrics),len(array_metrics)+1)
+# null_model = pd.read_csv('null_model.csv', delimiter=';', header=None)
+# X = np.linspace(0,len(array_metrics),len(array_metrics)+1)
 
-#print('x = ', X)
-'''null_model_points = []
-for i in range(len(null_model.iloc[0,:])):
-	null_model_points.append(np.mean(null_model.iloc[:,i]))
-
-
-ax.plot(X,null_model_points, lw=1, color='cornflowerblue', zorder=1)'''
-
-#for i in range(len(null_model)):
-#	ax.plot(X,null_model.iloc[i,:], lw=1, color='cornflowerblue', zorder=1)
+# #print('x = ', X)
+# '''null_model_points = []
+# for i in range(len(null_model.iloc[0,:])):
+# 	null_model_points.append(np.mean(null_model.iloc[:,i]))
 
 
-data = []
-for i in range(len(null_model.iloc[0,:])):
-	data.append(null_model.iloc[:,i])
+# ax.plot(X,null_model_points, lw=1, color='cornflowerblue', zorder=1)'''
 
-print(f'lenght of data {len(data)}')
-print(f'lenght of data {len(X)}')
-ax.boxplot(data, positions=X, zorder=1)
+# #for i in range(len(null_model)):
+# #	ax.plot(X,null_model.iloc[i,:], lw=1, color='cornflowerblue', zorder=1)
 
-print('average by chance = ', np.mean(data))
+
+# data = []
+# for i in range(len(null_model.iloc[0,:])):
+# 	data.append(null_model.iloc[:,i])
+
+# print(f'lenght of data {len(data)}')
+# print(f'lenght of data {len(X)}')
+# ax.boxplot(data, positions=X, zorder=1)
+
+# print('average by chance = ', np.mean(data))
 
 
 #print(null_model.iloc[0])

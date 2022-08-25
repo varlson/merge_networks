@@ -142,6 +142,7 @@ def intersections(metric, ord_metric, ord_covid):
 # The network name and whether we are dealing with "cases or deaths" come from command line. 
 net_name = sys.argv[1]
 cases_or_deaths = sys.argv[2]
+group = sys.argv[3]
 
 relative_path_in = 'results/' + net_name + '/metrics/'
 relative_path = 'results/' + net_name + '/intersection/'
@@ -157,7 +158,7 @@ metrics = ['degree', 'betweenness', 'closeness', 'vulnerability', 'strength', 'b
 
 
 # COVID-19 data
-file_name = 'out/single_brazil/cities/' + cases_or_deaths + '.csv'
+file_name = 'out/{group}/cities/' + cases_or_deaths + '.csv'
 print(f'filename {file_name}')
 data_covid = pd.read_csv(file_name, delimiter=',')
 
@@ -169,7 +170,7 @@ file_out_corr.write('METRIC;KENDALL;KEDALL_P_VALUE;SPEARMAN;SPEARMAN_P_VALUE\n')
 
 for metric in metrics:
 	print('metric: ', metric)
-	metric_data = pd.read_csv(f'out/single_brazil/metric/{net_name}.csv', delimiter=',')
+	metric_data = pd.read_csv(f'out/{group}/metric/{net_name}.csv', delimiter=',')
 
 	# Renaming columns to make it easier to manipulate de dataframes
 	# metric_data.columns = ['city_number', 'city_code', 'metric']
