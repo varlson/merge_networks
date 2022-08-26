@@ -140,9 +140,8 @@ ax.locator_params(axis='y', nbins=4)
 
 
 ax.set_xticks(np.linspace(0,len(array_metrics)-1,len(array_metrics)))
-ax.set_xticklabels(array_metrics.iloc[:,2], 
-	{'fontsize': 9,
-     'rotation': 60})
+temp = {'fontsize': 9, 'rotation': 60}
+ax.set_xticklabels(array_metrics.iloc[:,2], temp)
 
 
 
