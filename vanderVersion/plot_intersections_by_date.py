@@ -13,14 +13,14 @@ from mpl_toolkits.axes_grid.inset_locator import (inset_axes, InsetPosition,
 
 
 # Latex font --------------------
-# rc('text', usetex=True)
-# font = {'family' : 'normal',
-#          'weight' : 'bold',
-#          'size'   : 12}
+rc('text', usetex=True)
+font = {'family' : 'normal',
+         'weight' : 'bold',
+         'size'   : 12}
 
-# rc('font', **font)
-# params = {'legend.fontsize': 14}
-# plt.rcParams.update(params)
+rc('font', **font)
+params = {'legend.fontsize': 12}
+plt.rcParams.update(params)
 # -------------------------------
 
 
@@ -47,7 +47,8 @@ colors_w = ['gray',  'pink',         'red',    'mediumseagreen','orange',    'bl
 '''
 lbls = [r'$k$', r'$b$', r'$c$', r'$v$', r'$s$', r'$b_w$', r'$c_w$', r'$v_w$'] 
 colors   = ['black', 'palevioletred','brown','darkgreen', 'gray',  'pink', 'red', 'mediumseagreen']
-metrics = ['degree', 'betweenness', 'closeness', 'vulnerability', 'strength', 'betweenness_weight', 'closeness_weight', 'vulnerability_weight']
+metrics = ['degree', 'betweenness', 'strength', 'betweenness_w']
+# metrics = ['degree', 'betweenness', 'closeness', 'vulnerability', 'strength', 'betweenness_weight', 'closeness_weight', 'vulnerability_weight']
 
 
 
@@ -129,7 +130,7 @@ for i in range(len(metrics)):
 ax.legend(ncol=2, fontsize=9, loc='lower right')
 
 #ax.set_xlabel(r'$n$', fontsize=14)
-ax.set_ylabel(r'Intersection rate', fontsize=14)
+ax.set_ylabel(r'Intersection rate', fontsize=10)
 
 ax.set_ylim([-0.05, 1.05])
 ax.set_xlim([0.0, len(array_metrics)-1])
@@ -140,7 +141,7 @@ ax.locator_params(axis='y', nbins=4)
 
 ax.set_xticks(np.linspace(0,len(array_metrics)-1,len(array_metrics)))
 ax.set_xticklabels(array_metrics.iloc[:,2], 
-	{'fontsize': 12,
+	{'fontsize': 9,
      'rotation': 60})
 
 

@@ -154,12 +154,13 @@ print('CORRELATIONS')
 
 
 # Metrics we use
-metrics = ['degree', 'betweenness', 'closeness', 'vulnerability', 'strength', 'betweenness_weight', 'closeness_weight', 'vulnerability_weight']
+metrics = ['degree', 'betweenness', 'strength', 'betweenness_w']
+# metrics = ['degree', 'betweenness', 'closeness', 'vulnerability', 'strength', 'betweenness_weight', 'closeness_weight', 'vulnerability_weight']
 
 
 # COVID-19 data
-file_name = 'out/{group}/cities/' + cases_or_deaths + '.csv'
-print(f'filename {file_name}')
+file_name = f'out/{group}/cities/' + cases_or_deaths+'.csv'
+# print(f'full path {}')
 data_covid = pd.read_csv(file_name, delimiter=',')
 
 
@@ -170,7 +171,7 @@ file_out_corr.write('METRIC;KENDALL;KEDALL_P_VALUE;SPEARMAN;SPEARMAN_P_VALUE\n')
 
 for metric in metrics:
 	print('metric: ', metric)
-	metric_data = pd.read_csv(f'out/{group}/metric/{net_name}.csv', delimiter=',')
+	metric_data = pd.read_csv(f'out/{group}/metric/{net_name}_{metric}.csv', delimiter=',')
 
 	# Renaming columns to make it easier to manipulate de dataframes
 	# metric_data.columns = ['city_number', 'city_code', 'metric']
