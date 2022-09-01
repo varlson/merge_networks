@@ -22,7 +22,10 @@ def sort_by_metric(graph, metric):
         "degree": [[index, graph.vs[index]['geocode'], x] for index, x in enumerate(graph.degree())],
         "betweenness":[[index, graph.vs[index]['geocode'], x] for index, x in enumerate(graph.betweenness())],
         "strength": [[index, graph.vs[index]['geocode'], x] for index, x in enumerate(graph.strength(weights = graph.es['weight']))],
-        "betweenness_w": [[index, graph.vs[index]['geocode'], x] for index, x in enumerate(graph.betweenness(weights = graph.es['weight']))] 
+        "betweenness_w": [[index, graph.vs[index]['geocode'], x] for index, x in enumerate(graph.betweenness(weights = graph.es['weight']))], 
+        "closeness": [[index, graph.vs[index]['geocode'], x] for index, x in enumerate(graph.closeness())] ,
+        "closeness_w": [[index, graph.vs[index]['geocode'], x] for index, x in enumerate(graph.closeness(weights = graph.es['weight']))] 
+
     }
     
 

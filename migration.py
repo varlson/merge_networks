@@ -20,7 +20,7 @@ print(f'path {full_out}')
 dirMaker(f'{full_out}/metric')
 dirMaker(f'{full_out}/cities')
 
-metrics = ['degree', 'betweenness', 'betweenness_w', 'strength']
+metrics = ['degree', 'betweenness', 'betweenness_w', 'strength', 'closeness', 'closeness_w']
 def exporter(sorted_by_metric, prefix):
     nodes = [data[0] for data in sorted_by_metric]
     geocode = [int(data[1]) for data in sorted_by_metric]
@@ -39,10 +39,10 @@ def exporter(sorted_by_metric, prefix):
 def migrator():
     g = ig.Graph.Read_GraphML(f'out/{net_group_name}/networks/{net_name}.GraphML')
     g.es['weight'] = [x if x >0 else 0.00001 for x in g.es['weight']]
-    # try:
-    #     g.vs['geocode'] = g.vs['id']
-    # except:
-    #     pass
+    try:
+        g.vs['geocode'] = g.vs['id']
+    except:
+        pass
     df = pd.read_csv('in/cases-brazil-cities-time.csv')
     g.vs['id'] = g.vs['geocode']
     export_csv(g, df, net_name, f'{full_out}/cities')

@@ -141,8 +141,14 @@ def intersections(metric, ord_metric, ord_covid):
 
 # The network name and whether we are dealing with "cases or deaths" come from command line. 
 net_name = sys.argv[1]
-cases_or_deaths = sys.argv[2]
-group = sys.argv[3]
+cases_or_deaths = net_name
+group = sys.argv[2]
+
+temp = net_name.split('_')
+if len(temp) > 1:
+	net_name = f'{temp[0]}_&_{temp[1]}'
+	cases_or_deaths = net_name
+
 
 relative_path_in = 'results/' + net_name + '/metrics/'
 relative_path = 'results/' + net_name + '/intersection/'
@@ -154,7 +160,8 @@ print('CORRELATIONS')
 
 
 # Metrics we use
-metrics = ['degree', 'betweenness', 'strength', 'betweenness_w']
+metrics = ['degree', 'betweenness', 'strength', 'betweenness_w', 'closeness', 'closeness_w']
+
 # metrics = ['degree', 'betweenness', 'closeness', 'vulnerability', 'strength', 'betweenness_weight', 'closeness_weight', 'vulnerability_weight']
 
 

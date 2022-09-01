@@ -29,6 +29,10 @@ plt.rcParams.update(params)
 net_name = sys.argv[1]
 cases_or_deaths = sys.argv[2]
 
+temp = net_name.split('_')
+if len(temp) > 1:
+	net_name = f'{temp[0]}_&_{temp[1]}'
+
 relative_path = 'results/'
 
 
@@ -45,9 +49,10 @@ colors   = ['black', 'palevioletred','brown','darkgreen',     'darkorange','indi
 colors_w = ['gray',  'pink',         'red',    'mediumseagreen','orange',    'blueviolet']
 
 '''
-lbls = [r'$k$', r'$b$', r'$c$', r'$v$', r'$s$', r'$b_w$', r'$c_w$', r'$v_w$'] 
+# lbls = [r'$k$', r'$b$', r'$c$', r'$v$', r'$s$', r'$b_w$', r'$c_w$', r'$v_w$']
+lbls = [r'$k$', r'$b$', r'$c$', r'$s$', r'$b_w$', r'$c_w$', ]
 colors   = ['black', 'palevioletred','brown','darkgreen', 'gray',  'pink', 'red', 'mediumseagreen']
-metrics = ['degree', 'betweenness', 'strength', 'betweenness_w']
+metrics = ['degree', 'betweenness', 'closeness', 'strength', 'betweenness_w', 'closeness_w']
 # metrics = ['degree', 'betweenness', 'closeness', 'vulnerability', 'strength', 'betweenness_weight', 'closeness_weight', 'vulnerability_weight']
 
 
