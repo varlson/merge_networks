@@ -28,12 +28,18 @@ plt.rcParams.update(params)
 # The network name comes from command line. 
 net_name = sys.argv[1]
 cases_or_deaths = sys.argv[2]
+prefix = ''
 
 temp = net_name.split('_')
 if len(temp) > 1:
-	net_name = f'{temp[0]}_&_{temp[1]}'
+	net_name = f'{temp[1]}_&_{temp[2]}'
+	cases_or_deaths = net_name
+	prefix = temp[0]
 
-relative_path = 'results/'
+
+print(f'lenght of {len(temp)}')
+print(f'{net_name} {cases_or_deaths}')
+relative_path = f'results/'
 
 
 print('PLOTTING PREDICITON OVER TIME')
@@ -66,7 +72,7 @@ fig.set_size_inches(6, 3)
 series_size = 0
 
 
-relative_path_in = 'results/' + net_name + '/intersection/'
+relative_path_in = 'results/' + prefix +'_' + net_name + '/intersection/'
 
 
 for i in range(len(metrics)):
@@ -145,14 +151,14 @@ ax.locator_params(axis='y', nbins=4)
 
 
 ax.set_xticks(np.linspace(0,len(array_metrics)-1,len(array_metrics)))
-temp = {'fontsize': 9, 'rotation': 60}
+temp = {'fontsize': 5, 'rotation': 70}
 ax.set_xticklabels(array_metrics.iloc[:,2], temp)
 
 
 
 plt.tight_layout()
 
-fig.savefig(relative_path + net_name + '/intersec_' + cases_or_deaths + '.png', dpi=350)
-fig.savefig(relative_path + net_name + '/intersec_' + cases_or_deaths + '.pdf', dpi=350)
-fig.savefig(relative_path + net_name + '/intersec_' + cases_or_deaths + '.png', dpi=350)
-fig.savefig(relative_path + net_name + '/intersec_' + cases_or_deaths + '.svg', dpi=350)
+fig.savefig(relative_path + prefix +'_' + net_name + '/intersec_' + cases_or_deaths + '.png', dpi=350)
+fig.savefig(relative_path + prefix +'_' + net_name + '/intersec_' + cases_or_deaths + '.pdf', dpi=350)
+fig.savefig(relative_path + prefix +'_' + net_name + '/intersec_' + cases_or_deaths + '.svg', dpi=350)
+# fig.savefig(relative_path + net_name + '/intersec_' + cases_or_deaths + '.png', dpi=350)

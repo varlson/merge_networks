@@ -70,7 +70,7 @@ def pre_processing_data(ord_metric, data_covid):
 	print(len(ord_metric_comp), '  ', len(data_covid_comp))'''
 
 	return ord_metric_comp, data_covid_comp#, x1, x2
-
+	
 
 
 # Compute Kendall's tau and spearman correlations
@@ -143,15 +143,17 @@ def intersections(metric, ord_metric, ord_covid):
 net_name = sys.argv[1]
 cases_or_deaths = net_name
 group = sys.argv[2]
+prefix = None
 
 temp = net_name.split('_')
 if len(temp) > 1:
-	net_name = f'{temp[0]}_&_{temp[1]}'
+	net_name = f'{temp[1]}_&_{temp[2]}'
 	cases_or_deaths = net_name
+	prefix = temp[0]
 
 
 relative_path_in = 'results/' + net_name + '/metrics/'
-relative_path = 'results/' + net_name + '/intersection/'
+relative_path = 'results/' + prefix+'_'+net_name + '/intersection/'
 
 # create directory if it does not exist
 Path(relative_path).mkdir(parents=True, exist_ok=True)

@@ -5,14 +5,14 @@ import sys
 path = 'vanderVersion'
 out_path = f'{path}/'
 net_group_name = sys.argv[1]
-net_name = ''
+net_name = sys.argv[2]
+prefix = None
+temp = net_name.split('_')
+if len(temp) > 1:
+    net_name = f'{temp[0]}_&_{temp[1]}'
 
-print(f'size {sys.argv[1]} {sys.argv[2]}')
 
-if len(sys.argv) >= 4:
-    net_name = f'{sys.argv[2]}_&_{sys.argv[3]}'
-else:
-     net_name = sys.argv[2]
+
 
 full_out = f'{path}/out/{net_group_name}'
 
