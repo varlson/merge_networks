@@ -12,33 +12,39 @@ from mpl_toolkits.axes_grid.inset_locator import (inset_axes, InsetPosition,
                                                   mark_inset)
 
 
+def setInterval(interval, data):
+	setted_data = [dat if i%interval==0 else '' for i, dat in enumerate(data)]
+	print(setted_data)
+	return setted_data
 # Latex font --------------------
 rc('text', usetex=True)
 font = {'family' : 'normal',
          'weight' : 'bold',
-         'size'   : 12}
+         'size'   : 9}
 
 rc('font', **font)
-params = {'legend.fontsize': 12}
+params = {'legend.fontsize': 9}
 plt.rcParams.update(params)
 # -------------------------------
 
 
 
 # The network name comes from command line. 
-net_name = sys.argv[1]
-cases_or_deaths = sys.argv[2]
+net_name = 'terrestrial'
+interval = 5
+# cases_or_deaths = 'terrestrial_&_aerial'
+cases_or_deaths = 'SP_'+net_name
 prefix = ''
 
-temp = net_name.split('_')
-if len(temp) > 1:
-	net_name = f'{temp[1]}_&_{temp[2]}'
-	cases_or_deaths = net_name
-	prefix = temp[0]
+# temp = net_name.split('_')
+# if len(temp) > 1:
+# 	net_name = f'{temp[1]}_&_{temp[2]}'
+# 	cases_or_deaths = net_name
+# 	prefix = temp[0]
 
 
-print(f'lenght of {len(temp)}')
-print(f'{net_name} {cases_or_deaths}')
+# print(f'lenght of {len(temp)}')
+# print(f'{net_name} {cases_or_deaths}')
 relative_path = f'results/'
 
 
@@ -72,7 +78,11 @@ fig.set_size_inches(6, 3)
 series_size = 0
 
 
-relative_path_in = 'results/' + prefix +'_' + net_name + '/intersection/'
+relative_path_in = 'results/'+'SP_'+net_name + '/intersection/'
+# relative_path_in = 'results/'+net_name + '/intersection/'
+
+
+
 
 
 for i in range(len(metrics)):
@@ -97,6 +107,9 @@ for i in range(len(metrics)):
 
 	#print('size = ', len(array_metrics))
 
+	# print(array_metrics.iloc[:,0])
+	# print('--------------------------------------------------------')
+	# print(array_metrics.iloc[:,1])
 	
 	if i < len(metrics)/2:
 		ax.plot(array_metrics.iloc[:,0], array_metrics.iloc[:,1], lw=2, color=cl, label=label, linestyle='--', zorder=2)
@@ -141,7 +154,7 @@ for i in range(len(metrics)):
 ax.legend(ncol=2, fontsize=9, loc='lower right')
 
 #ax.set_xlabel(r'$n$', fontsize=14)
-ax.set_ylabel(r'Intersection rate', fontsize=10)
+ax.set_ylabel(r'Intersection rate', fontsize=9)
 
 ax.set_ylim([-0.05, 1.05])
 ax.set_xlim([0.0, len(array_metrics)-1])
@@ -151,14 +164,22 @@ ax.locator_params(axis='y', nbins=4)
 
 
 ax.set_xticks(np.linspace(0,len(array_metrics)-1,len(array_metrics)))
-temp = {'fontsize': 5, 'rotation': 70}
-ax.set_xticklabels(array_metrics.iloc[:,2], temp)
+temp = {'fontsize': 9, 'rotation': 70}
+# print('--------------------------------------------------------')
+# print(array_metrics.iloc[:,2])
+# ax.set_xticklabels(array_metrics.iloc[:,2], temp)
+x_labl = setInterval(interval,  array_metrics.iloc[:,2])
+ax.set_xticklabels(x_labl, temp)
 
 
 
 plt.tight_layout()
 
-fig.savefig(relative_path + prefix +'_' + net_name + '/intersec_' + cases_or_deaths + '.png', dpi=350)
-fig.savefig(relative_path + prefix +'_' + net_name + '/intersec_' + cases_or_deaths + '.pdf', dpi=350)
-fig.savefig(relative_path + prefix +'_' + net_name + '/intersec_' + cases_or_deaths + '.svg', dpi=350)
+# fig.savefig(relative_path + net_name + '/intersec_' + cases_or_deaths + '.png', dpi=350)
+# fig.savefig(relative_path + net_name + '/intersec_' + cases_or_deaths + '.pdf', dpi=350)
+# fig.savefig(relative_path + net_name + '/intersec_' + cases_or_deaths + '.svg', dpi=350)
+
+fig.savefig(relative_path +'SP_'+ net_name + '/intersec_' + cases_or_deaths + '.png', dpi=350)
+fig.savefig(relative_path +'SP_'+ net_name + '/intersec_' + cases_or_deaths + '.pdf', dpi=350)
+fig.savefig(relative_path +'SP_'+ net_name + '/intersec_' + cases_or_deaths + '.svg', dpi=350)
 # fig.savefig(relative_path + net_name + '/intersec_' + cases_or_deaths + '.png', dpi=350)
